@@ -16,6 +16,7 @@
 
 package com.example.android.dessertclicker
 
+import android.os.Bundle
 import android.os.Handler
 import timber.log.Timber
 import android.os.Looper
@@ -54,10 +55,12 @@ class DessertTimer(lifecycle: Lifecycle) : LifecycleObserver{
     private var handler = Handler(Looper.getMainLooper())
     private lateinit var runnable: Runnable
 
+
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
     fun startTimer() {
         // Create the runnable action, which prints out a log and increments the seconds counter
         runnable = Runnable {
+
             secondsCount++
             Timber.i("Timer is at : $secondsCount")
             // postDelayed re-adds the action to the queue of actions the Handler is cycling

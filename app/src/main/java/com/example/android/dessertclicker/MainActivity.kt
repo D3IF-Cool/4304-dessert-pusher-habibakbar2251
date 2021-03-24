@@ -30,6 +30,7 @@ import timber.log.Timber
 
 const val KEY_REVENUE = "revenue_key"
 const val KEY_DESSERT_VALUE = "dessert_sold_key"
+const val KEY_TIMER = "key_timer"
 
 class MainActivity : AppCompatActivity() {
 
@@ -77,7 +78,6 @@ class MainActivity : AppCompatActivity() {
         binding.dessertButton.setOnClickListener {
             onDessertClicked()
         }
-        dessertTimer = DessertTimer(this.lifecycle)
 
         if( savedInstanceState != null) {
             revenue = savedInstanceState.getInt(KEY_REVENUE, 0)
@@ -91,13 +91,19 @@ class MainActivity : AppCompatActivity() {
 
         // Make sure the correct dessert is showing
         binding.dessertButton.setImageResource(currentDessert.imageId)
+        dessertTimer = DessertTimer(this.lifecycle)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putInt(KEY_REVENUE, revenue)
         outState.putInt(KEY_DESSERT_VALUE, dessertsSold)
+        outState.putInt(KEY_TIMER, dessertTimer.secondsCount)
+    }
 
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        dessertTimer.secondsCount = savedInstanceState.getInt(KEY_TIMER,0)
     }
 
     override fun onStart() {
